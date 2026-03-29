@@ -1,8 +1,4 @@
 from sympy import symbols, Eq, sympify, solve, simplify
-from transformers import pipeline
-
-# Load AI model
-generator = pipeline("text-generation", model="gpt2")
 
 def solve_expression(expr):
     try:
@@ -19,9 +15,7 @@ def solve_expression(expr):
 
 
 def explain_solution(problem):
-    try:
-        prompt = f"Explain step by step: {problem}"
-        explanation = generator(prompt, max_length=100, num_return_sequences=1)
-        return explanation[0]['generated_text']
-    except:
-        return "Explanation not available"
+    if "=" in problem:
+        return "Rearrange the equation and isolate x step by step."
+    else:
+        return "Follow order of operations (BODMAS) to simplify the expression."
